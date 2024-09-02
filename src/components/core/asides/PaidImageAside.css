@@ -1,0 +1,12 @@
+/* Define styles for the hover effect */
+.accordion-trigger:hover + .accordion-content {
+    display: block;
+  }
+  
+  /* Hide accordion content by default */
+  .accordion-content {
+    display: none;
+  }
+  .hi {
+    display: hidden;
+  }
