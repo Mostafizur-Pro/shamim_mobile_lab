@@ -8,7 +8,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { FaEye } from 'react-icons/fa'
 
-const UserView = ({ users }) => {
+const UserView = ({ user }) => {
   return (
     <div>
       <Dialog>
@@ -28,19 +28,19 @@ const UserView = ({ users }) => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 py-4">
             <div className="flex flex-col">
               <p className="font-medium text-gray-700">Name:</p>
-              <p className="text-gray-900">{users.name}</p>
+              <p className="text-gray-900">{user.name}</p>
             </div>
             <div className="flex flex-col">
               <p className="font-medium text-gray-700">Role:</p>
-              <p className="text-gray-900">{users.role}</p>
+              <p className="text-gray-900">{user.role}</p>
             </div>
             <div className="flex flex-col">
               <p className="font-medium text-gray-700">Number:</p>
-              <p className="text-gray-900">{users.number}</p>
+              <p className="text-gray-900">{user.number}</p>
             </div>
             <div className="flex flex-col">
               <p className="font-medium text-gray-700">Email:</p>
-              <p className="text-gray-900">{users.email}</p>
+              <p className="text-gray-900">{user.email}</p>
             </div>
           </div>
         </DialogContent>

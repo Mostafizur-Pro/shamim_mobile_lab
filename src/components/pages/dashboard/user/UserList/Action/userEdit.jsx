@@ -12,12 +12,12 @@ import { Label } from '@/components/ui/label'
 import { useState } from 'react'
 import { FaEdit } from 'react-icons/fa'
 
-const UserEdit = ({ users }) => {
+const UserEdit = ({ user }) => {
   const [formData, setFormData] = useState({
-    name: users.name,
-    number: users.number,
-    email: users.email,
-    role: users.role,
+    name: user.name,
+    number: user.number,
+    email: user.email,
+    role: user.role,
   })
 
   const handleInputChange = (e) => {
@@ -31,7 +31,7 @@ const UserEdit = ({ users }) => {
   const handleSaveChanges = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_LOCAL_API_URL}/api/v1/users/${users.id}`,
+        `${import.meta.env.VITE_LOCAL_API_URL}/api/v1/user/${user.id}`,
         {
           method: 'PUT',
           headers: {

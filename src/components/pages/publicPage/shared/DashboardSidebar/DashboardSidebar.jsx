@@ -54,34 +54,53 @@ const DashboardSidebar = () => {
           </li>
 
           {/* Users */}
-          <Accordion type="single" collapsible>
-            <AccordionItem value="user">
-              <AccordionTrigger
-                className={`font-normal ${
-                  ['/dashboard/user/user-list'].includes(location.pathname)
-                    ? 'font-semibold bg-secondary_main rounded-[6px] text-white'
-                    : ''
-                }`}
-              >
-                <div className="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
-                  <FaUser className="mr-3" />
-                  <p>Users</p>
-                </div>
-              </AccordionTrigger>
+          {users && users.role === 'admin' && (
+            <>
+              <Accordion type="single" collapsible>
+                <AccordionItem value="user">
+                  <AccordionTrigger
+                    className={`font-normal ${
+                      [
+                        '/dashboard/user/user-list',
+                        '/dashboard/user/add-user',
+                      ].includes(location.pathname)
+                        ? 'font-semibold bg-secondary_main rounded-[6px] text-white'
+                        : ''
+                    }`}
+                  >
+                    <div className="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                      <FaUser className="mr-3" />
+                      <p>Users</p>
+                    </div>
+                  </AccordionTrigger>
 
-              <div className="ps-2 ms-6 border-s border-dashed">
-                <AccordionContent
-                  className={`px-3.5 py-2.5 mt-2 ${
-                    location.pathname === '/dashboard/user/user-list'
-                      ? 'font-semibold bg-secondary_main rounded-[6px] text-white'
-                      : ''
-                  }`}
-                >
-                  <Link to="/dashboard/user/user-list">User List</Link>
-                </AccordionContent>
-              </div>
-            </AccordionItem>
-          </Accordion>
+                  <div className="ps-2 ms-6 border-s border-dashed">
+                    <AccordionContent
+                      className={`px-3.5 py-2.5 mt-2 ${
+                        location.pathname === '/dashboard/user/add-user'
+                          ? 'font-semibold bg-secondary_main rounded-[6px] text-white'
+                          : ''
+                      }`}
+                    >
+                      <Link to="/dashboard/user/add-user">Add User</Link>
+                    </AccordionContent>
+                  </div>
+                  <div className="ps-2 ms-6 border-s border-dashed">
+                    <AccordionContent
+                      className={`px-3.5 py-2.5 mt-2 ${
+                        location.pathname === '/dashboard/user/user-list'
+                          ? 'font-semibold bg-secondary_main rounded-[6px] text-white'
+                          : ''
+                      }`}
+                    >
+                      <Link to="/dashboard/user/user-list">User List</Link>
+                    </AccordionContent>
+                  </div>
+                </AccordionItem>
+              </Accordion>
+            </>
+          )}
+
           {/* Products */}
           <Accordion type="single" collapsible>
             <AccordionItem value="product">

@@ -4,6 +4,7 @@ import AddProduct from '@/components/pages/dashboard/Product/AddProduct/AddProdu
 import ProductList from '@/components/pages/dashboard/Product/ProductList/ProductList'
 import PrivateRoute from './Provider/PrivateRoute'
 import UserList from '@/components/pages/dashboard/user/UserList/UserList'
+import AddUser from '@/components/pages/dashboard/user/AddUser/AddUser'
 
 const DashboardRoutes = [
   {
@@ -17,6 +18,11 @@ const DashboardRoutes = [
       {
         path: '/dashboard',
         element: <DashboardPage />,
+      },
+
+      {
+        path: '/dashboard/user/add-user',
+        element: <AddUser />,
       },
 
       {

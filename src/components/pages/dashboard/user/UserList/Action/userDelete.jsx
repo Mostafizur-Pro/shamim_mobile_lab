@@ -11,14 +11,14 @@ import { Button } from '@/components/ui/button'
 import { FaTrashAlt } from 'react-icons/fa'
 import axios from 'axios'
 
-const UserDelete = ({ isOpen, onClose, users }) => {
+const UserDelete = ({ isOpen, onClose, user }) => {
   const [isDeleting, setIsDeleting] = useState(false)
 
   const handleDelete = async () => {
     setIsDeleting(true)
     try {
       await axios.delete(
-        `${import.meta.env.VITE_LOCAL_API_URL}/api/v1/users/${users.id}`
+        `${import.meta.env.VITE_LOCAL_API_URL}/api/v1/user/${user.id}`
       )
 
       window.location.reload()
@@ -43,7 +43,7 @@ const UserDelete = ({ isOpen, onClose, users }) => {
           <DialogTitle>Confirm Deletion</DialogTitle>
         </DialogHeader>
         <div className="py-4">
-          <p>Are you sure you want to delete {users.name}?</p>
+          <p>Are you sure you want to delete {user.name}?</p>
         </div>
         <DialogFooter>
           <Button

@@ -3,56 +3,63 @@ import DashboardTable from '@/components/core/table/DashboardTable'
 import UserView from './Action/userView'
 import UserDelete from './Action/userDelete'
 import UserEdit from './Action/userEdit'
+import { useAuth } from '@/components/context/AuthContext'
 
 // Define columns for the DashboardTable
-const DashboardColumns = [
-  {
-    title: 'Sl',
-    dataKey: 'id',
-    row: (users) => <span>{users?.id}</span>,
-  },
-  {
-    title: 'Name',
-    dataKey: 'name',
-    row: (users) => <p>{users?.name}</p>,
-  },
-  {
-    title: 'Number',
-    dataKey: 'number',
-    row: (users) => <p>{users?.number}</p>,
-  },
-
-  {
-    title: 'Email',
-    dataKey: 'email',
-    row: (users) => <p>{users?.email}</p>,
-  },
-
-  {
-    title: 'Action',
-    dataKey: 'action',
-    row: (users) => (
-      <div className="flex justify-center items-center">
-        <div className="flex justify-center items-center">
-          <div className="flex items-center text-lg">
-            <UserEdit users={users} />
-          </div>
-          <div className="flex items-center text-lg">
-            <UserView users={users} />
-          </div>
-          <div className="flex items-center text-lg">
-            <UserDelete users={users} />
-          </div>
-        </div>
-      </div>
-    ),
-  },
-]
 
 const UserList = () => {
-  const [users, setUsers] = useState([])
+  const { users } = useAuth()
+  const [userData, setUserData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
+
+  const DashboardColumns = [
+    {
+      title: 'Sl',
+      dataKey: 'id',
+      row: (user) => <span>{user?.id}</span>,
+    },
+    {
+      title: 'Name',
+      dataKey: 'name',
+      row: (user) => <p>{user?.name}</p>,
+    },
+    {
+      title: 'Number',
+      dataKey: 'number',
+      row: (user) => <p>{user?.number}</p>,
+    },
+
+    {
+      title: 'Email',
+      dataKey: 'email',
+      row: (user) => <p>{user?.email}</p>,
+    },
+
+    {
+      title: 'Action',
+      dataKey: 'action',
+      row: (user) => (
+        <div className="flex justify-center items-center">
+          {users && users.role === 'admin' && (
+            <>
+              <div className="flex justify-center items-center">
+                <div className="flex items-center text-lg">
+                  <UserEdit user={user} />
+                </div>
+                <div className="flex items-center text-lg">
+                  <UserView user={user} />
+                </div>
+                <div className="flex items-center text-lg">
+                  <UserDelete user={user} />
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      ),
+    },
+  ]
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -65,7 +72,7 @@ const UserList = () => {
         }
         const data = await response.json()
         console.log('data', data)
-        setUsers(data.data)
+        setUserData(data.data)
       } catch (error) {
         setError(error.message)
       } finally {
@@ -87,11 +94,15 @@ const UserList = () => {
   return (
     <div className="p-4">
       <h2 className="text-2xl mb-4">Users List</h2>
-      <DashboardTable
-        data={users}
-        columns={DashboardColumns}
-        isLoading={isLoading}
-      />
+      {users && users.role === 'admin' && (
+        <>
+          <DashboardTable
+            data={userData}
+            columns={DashboardColumns}
+            isLoading={isLoading}
+          />
+        </>
+      )}
     </div>
   )
 }
