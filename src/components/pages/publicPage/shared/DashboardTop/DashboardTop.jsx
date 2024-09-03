@@ -18,15 +18,7 @@ const DashboardTop = () => {
             <ul className="flex space-x-4">
               <li>
                 <Link
-                  to="/dashboard/home"
-                  className="text-blue-500 hover:underline"
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/dashboard/profile"
+                  to="/dashboard/profile/profile"
                   className="text-blue-500 hover:underline"
                 >
                   Profile
@@ -34,12 +26,13 @@ const DashboardTop = () => {
               </li>
               <li>
                 <Link
-                  to="/dashboard/settings"
+                  to="/dashboard/product/add-product"
                   className="text-blue-500 hover:underline"
                 >
-                  Settings
+                  Add Product
                 </Link>
               </li>
+
               <li className="text-blue-500 hover:underline">
                 <button onClick={handleLogout}>
                   {' '}

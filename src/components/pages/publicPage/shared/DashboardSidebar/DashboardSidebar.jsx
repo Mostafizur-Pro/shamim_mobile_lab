@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
-import { FiHome, FiBarChart } from 'react-icons/fi'
-import { FaUserDoctor } from 'react-icons/fa6'
+import { FiHome } from 'react-icons/fi'
+import { FaUserDoctor, FaUserGroup } from 'react-icons/fa6'
 import {
   Accordion,
   AccordionContent,
@@ -116,7 +116,7 @@ const DashboardSidebar = () => {
                     }`}
                   >
                     <div className="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
-                      <FaUser className="mr-3" />
+                      <FaUserGroup className="mr-3" />
                       <p>Users</p>
                     </div>
                   </AccordionTrigger>
@@ -196,7 +196,7 @@ const DashboardSidebar = () => {
           </Accordion>
 
           {/* Reports */}
-          <li>
+          {/* <li>
             <Link
               to="/dashboard/reports"
               className={`flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200 ${
@@ -208,7 +208,7 @@ const DashboardSidebar = () => {
               <FiBarChart className="mr-3" />
               <span>Reports</span>
             </Link>
-          </li>
+          </li> */}
         </ul>
       </nav>
 

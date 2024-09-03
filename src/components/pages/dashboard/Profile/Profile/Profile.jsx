@@ -1,4 +1,5 @@
 import { useAuth } from '@/components/context/AuthContext'
+import UserEdit from '../../user/UserList/Action/userEdit'
 
 const ProfilePage = () => {
   const { users } = useAuth()
@@ -32,16 +33,22 @@ const ProfilePage = () => {
 
   return (
     <div className="max-w-3xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-lg">
-      <div className="flex flex-col md:flex-row items-center md:space-x-6">
-        <img
-          src={users.image}
-          alt={users.name}
-          className="w-32 h-32 rounded-full object-cover border border-gray-300 shadow-md"
-        />
-        <div className="mt-4 md:mt-0">
-          <h1 className="text-3xl font-bold text-gray-800">{users.name}</h1>
-          <p className="text-lg text-gray-600">{users.email}</p>
-          <p className="text-sm text-gray-500">{users.number}</p>
+      <div className="flex justify-between">
+        <div className="flex flex-col md:flex-row items-center md:space-x-6">
+          <img
+            src={users.image}
+            alt={users.name}
+            className="w-32 h-32 rounded-full object-cover border border-gray-300 shadow-md"
+          />
+          <div className="mt-4 md:mt-0">
+            <h1 className="text-3xl font-bold text-gray-800">{users.name}</h1>
+            <p className="text-lg text-gray-600">{users.email}</p>
+            <p className="text-sm text-gray-500">{users.number}</p>
+          </div>
+        </div>
+        <div>
+          {' '}
+          <UserEdit user={users} />
         </div>
       </div>
       <div className="mt-8">

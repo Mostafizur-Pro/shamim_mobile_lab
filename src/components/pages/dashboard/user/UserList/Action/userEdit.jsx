@@ -1,3 +1,4 @@
+import { useAuth } from '@/components/context/AuthContext'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -13,6 +14,7 @@ import { useState } from 'react'
 import { FaEdit } from 'react-icons/fa'
 
 const UserEdit = ({ user }) => {
+  const { users } = useAuth()
   const [formData, setFormData] = useState({
     name: user.name,
     number: user.number,
@@ -83,15 +85,21 @@ const UserEdit = ({ user }) => {
                     {key.replace('_', ' ').toUpperCase()}
                   </Label>
                   {key === 'role' ? (
-                    <select
-                      id={key}
-                      value={formData[key]}
-                      onChange={handleInputChange}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    >
-                      <option value="user">User</option>
-                      <option value="admin">Admin</option>
-                    </select>
+                    <div>
+                      {users && users.role === 'admin' && (
+                        <>
+                          <select
+                            id={key}
+                            value={formData[key]}
+                            onChange={handleInputChange}
+                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                          >
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                          </select>
+                        </>
+                      )}
+                    </div>
                   ) : (
                     <Input
                       id={key}
