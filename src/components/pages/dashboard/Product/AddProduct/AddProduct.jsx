@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '@/components/context/AuthContext'
 
 const AddProduct = () => {
   const {
@@ -12,10 +13,15 @@ const AddProduct = () => {
     reset,
   } = useForm()
 
+  const { users } = useAuth()
   const navigate = useNavigate()
 
   const handleFormSubmit = async (data) => {
     console.log('data', data)
+    const productData = {
+      ...data,
+      user_id: users?.id, // Ensure users and users.id exist
+    }
     try {
       // Post request to the API endpoint
       const response = await fetch(
@@ -25,7 +31,7 @@ const AddProduct = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(data),
+          body: JSON.stringify(productData),
         }
       )
 
