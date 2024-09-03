@@ -5,6 +5,8 @@ import ProductList from '@/components/pages/dashboard/Product/ProductList/Produc
 import PrivateRoute from './Provider/PrivateRoute'
 import UserList from '@/components/pages/dashboard/user/UserList/UserList'
 import AddUser from '@/components/pages/dashboard/user/AddUser/AddUser'
+import ChangePassword from '@/components/pages/dashboard/Profile/ChangePassword/ChangePassword'
+import ProfilePage from '@/components/pages/dashboard/Profile/Profile/Profile'
 
 const DashboardRoutes = [
   {
@@ -19,6 +21,20 @@ const DashboardRoutes = [
         path: '/dashboard',
         element: <DashboardPage />,
       },
+
+      // Profile
+
+      {
+        path: '/dashboard/profile/profile',
+        element: <ProfilePage />,
+      },
+
+      {
+        path: '/dashboard/profile/change-password',
+        element: <ChangePassword />,
+      },
+
+      // Users
 
       {
         path: '/dashboard/user/add-user',

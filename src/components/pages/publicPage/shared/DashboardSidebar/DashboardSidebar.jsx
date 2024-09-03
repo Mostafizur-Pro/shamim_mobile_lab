@@ -53,6 +53,53 @@ const DashboardSidebar = () => {
             </Link>
           </li>
 
+          {/* Profile */}
+
+          <Accordion type="single" collapsible>
+            <AccordionItem value="user">
+              <AccordionTrigger
+                className={`font-normal ${
+                  [
+                    '/dashboard/profile/profile',
+                    '/dashboard/profile/change-password',
+                  ].includes(location.pathname)
+                    ? 'font-semibold bg-secondary_main rounded-[6px] text-white'
+                    : ''
+                }`}
+              >
+                <div className="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white transition duration-200">
+                  <FaUser className="mr-3" />
+                  <p>Profile</p>
+                </div>
+              </AccordionTrigger>
+
+              <div className="ps-2 ms-6 border-s border-dashed">
+                <AccordionContent
+                  className={`px-3.5 py-2.5 mt-2 ${
+                    location.pathname === '/dashboard/profile/profile'
+                      ? 'font-semibold bg-secondary_main rounded-[6px] text-white'
+                      : ''
+                  }`}
+                >
+                  <Link to="/dashboard/profile/profile">Profile</Link>
+                </AccordionContent>
+              </div>
+              <div className="ps-2 ms-6 border-s border-dashed">
+                <AccordionContent
+                  className={`px-3.5 py-2.5 mt-2 ${
+                    location.pathname === '/dashboard/profile/change-password'
+                      ? 'font-semibold bg-secondary_main rounded-[6px] text-white'
+                      : ''
+                  }`}
+                >
+                  <Link to="/dashboard/profile/change-password">
+                    Change Password
+                  </Link>
+                </AccordionContent>
+              </div>
+            </AccordionItem>
+          </Accordion>
+
           {/* Users */}
           {users && users.role === 'admin' && (
             <>
