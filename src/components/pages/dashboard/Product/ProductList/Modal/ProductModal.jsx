@@ -1,19 +1,13 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { FaPrint } from 'react-icons/fa'
 import Barcode from 'react-barcode'
 
 const ProductModal = ({ product }) => {
   const handlePrint = () => {
-    // Open print dialog
     window.print()
   }
+  // const productUrl = `http://localhost:5173/product/${product.product_id}`
 
   return (
     <Dialog>
@@ -24,40 +18,39 @@ const ProductModal = ({ product }) => {
           </div>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Product Details</DialogTitle>
-        </DialogHeader>
-        <div className="py-4">
-          <div className="mb-4">
-            <p className="font-bold">
-              Product ID:{' '}
-              <span className="font-normal">{product.product_id}</span>
-            </p>
-          </div>
-          <div className="mb-4">
-            <p className="font-bold capitalize">
-              Customer Name:{' '}
-              <span className="font-normal">{product.customer_name}</span>
-            </p>
-          </div>
-          <div className="mb-4">
-            <p className="font-bold">
-              Customer Number:{' '}
-              <span className="font-normal">{product.customer_number}</span>
-            </p>
-          </div>
-          <div className="flex flex-col items-center mt-4 space-y-4">
-            <div>
-              <Barcode value={product.product_id} />
+      <DialogContent className="sm:max-w-[425px] print-container">
+        <style>
+          {`
+            @media print {
+              .print-container {
+                width: 1.8in; /* Set the width for the barcode container */
+                height: 0.8in;
+                margin: 0;
+                padding: 0;
+              }
+
+              .barcode-container {
+                width: 100%;
+                height: auto;
+              }
+            }
+          `}
+        </style>
+
+        <div className="text-[10px] capitalize text-center">
+          <span>
+            {product.customer_name}, {product.customer_number}
+          </span>
+
+          <div>
+            <div className="barcode-container">
+              <Barcode className="w-44 h-16" value={product.product_id} />
             </div>
           </div>
-          {/* Print Button */}
-          <div className="mt-4 text-center">
-            <Button onClick={handlePrint} className="bg-blue-600 text-white">
-              Print
-            </Button>
-          </div>
+
+          <Button onClick={handlePrint} className="bg-blue-600 text-white">
+            Print
+          </Button>
         </div>
       </DialogContent>
     </Dialog>

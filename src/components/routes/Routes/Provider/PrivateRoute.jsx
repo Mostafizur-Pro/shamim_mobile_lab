@@ -6,7 +6,7 @@ const PrivateRoute = ({ children }) => {
   const { users } = useAuth()
   const [isUser, isUserLoading] = useUser(users?.email)
   const location = useLocation()
-  console.log('data', users, isUser)
+  // console.log('data', users, isUser)
 
   if (!isUser && isUserLoading) {
     return (

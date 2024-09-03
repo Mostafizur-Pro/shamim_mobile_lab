@@ -115,15 +115,9 @@ const ProductList = () => {
           {users && users.role === 'admin' && (
             <>
               <ProductDelete product={product} />
-              <ProductModal product={product} />
-              {/* <button
-                className="p-2 text-blue-500 hover:text-blue-700"
-                onClick={() => handlePrintClick(product)}
-              >
-                <FaPrint />
-              </button> */}
             </>
           )}
+          <ProductModal product={product} />
         </div>
       ),
     },
@@ -165,17 +159,6 @@ const ProductList = () => {
               <option value="completed">Completed</option>
             </select>
           </div>
-          <div>
-            <select
-              name="brand"
-              value={filters.brand}
-              onChange={handleFilterChange}
-              className="p-2 border border-gray-300 rounded-md"
-            >
-              <option value="">All Brands</option>
-              {/* Add brand options dynamically if needed */}
-            </select>
-          </div>
         </div>
       </div>
 
@@ -183,8 +166,6 @@ const ProductList = () => {
         data={filteredProducts}
         columns={DashboardColumns}
         isLoading={isLoading}
-        // onSort={handleSort}
-        // sortConfig={sortConfig}
       />
     </div>
   )
