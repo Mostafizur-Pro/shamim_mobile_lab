@@ -31,7 +31,7 @@ const UserEdit = ({ user }) => {
   const handleSaveChanges = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_LOCAL_API_URL}/api/v1/user/${user.id}`,
+        `${import.meta.env.VITE_LOCAL_API_URL}/api/v1/users/${user.id}`,
         {
           method: 'PUT',
           headers: {
@@ -41,12 +41,14 @@ const UserEdit = ({ user }) => {
         }
       )
       if (!response.ok) {
-        throw new Error('Failed to update product')
+        throw new Error('Failed to update user')
       }
-      // Handle successful update and reload the page
-      window.location.reload()
+      // Handle successful update, show a success message, or reload the page
+      alert('User updated successfully')
+      window.location.reload() // Refresh the page or use state management to update UI
     } catch (error) {
-      console.error('Error updating product:', error)
+      console.error('Error updating user:', error)
+      alert('Error updating user. Please try again.')
     }
   }
 
@@ -64,33 +66,50 @@ const UserEdit = ({ user }) => {
           <DialogHeader>
             <DialogTitle>Edit User</DialogTitle>
           </DialogHeader>
-          <div className="grid grid-cols-2 gap-4 py-4">
+          <div className="grid grid-cols-1 gap-4 py-4">
             {Object.keys(formData)
               .filter(
                 (key) =>
-                  !['receive_date', 'delivery_date', 'status'].includes(key)
+                  key !== 'receive_date' &&
+                  key !== 'delivery_date' &&
+                  key !== 'status'
               )
               .map((key) => (
-                <div key={key} className="">
-                  <Label htmlFor={key} className="text-right uppercase">
-                    {key.replace('_', ' ')}
+                <div key={key} className="flex flex-col">
+                  <Label
+                    htmlFor={key}
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    {key.replace('_', ' ').toUpperCase()}
                   </Label>
-                  <Input
-                    id={key}
-                    value={formData[key]}
-                    onChange={handleInputChange}
-                    className="col-span-3"
-                  />
+                  {key === 'role' ? (
+                    <select
+                      id={key}
+                      value={formData[key]}
+                      onChange={handleInputChange}
+                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    >
+                      <option value="user">User</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                  ) : (
+                    <Input
+                      id={key}
+                      value={formData[key]}
+                      onChange={handleInputChange}
+                      className="mt-1"
+                    />
+                  )}
                 </div>
               ))}
           </div>
           <DialogFooter>
             <Button
-              type="button" // Changed from 'submit' to 'button' since it's not within a form element
+              type="button"
               className="bg-blue-500 hover:bg-blue-700 text-white"
               onClick={handleSaveChanges}
             >
-              Save changes
+              Save Changes
             </Button>
           </DialogFooter>
         </DialogContent>
