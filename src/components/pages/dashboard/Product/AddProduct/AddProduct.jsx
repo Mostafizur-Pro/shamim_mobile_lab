@@ -16,7 +16,6 @@ const AddProduct = () => {
     reset,
     setValue,
     getValues,
-    watch,
   } = useForm()
 
   const [image, setImage] = useState(null) // State to store image file
