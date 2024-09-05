@@ -29,7 +29,7 @@ const ProductList = () => {
         setProducts(data.data)
         setFilteredProducts(data.data)
       } catch (error) {
-        setError(error.message)
+        setError('Failed to load products. Please try again later.')
       } finally {
         setIsLoading(false)
       }
@@ -74,21 +74,36 @@ const ProductList = () => {
 
   const DashboardColumns = [
     {
-      title: 'Sl',
-      dataKey: 'product_id',
-      row: (product) => <span>{product.product_id}</span>,
-      sortable: true,
-    },
-    {
       title: 'Brand',
       dataKey: 'brand',
-      row: (product) => <p>{product.brand}</p>,
+      row: (product) => (
+        <div className="flex gap-2 items-center">
+          <img
+            src={
+              product?.image ===
+              'https://img.freepik.com/free-vector/hand-drawn-phone-cartoon-illustration_23-2150616513.jpg?t=st=1725519341~exp=1725522941~hmac=902ea2293a1eb61cdd0eeaa50f4ec901cd03b753817fd1d3b86f8d8b4ffd77b9&w=826'
+                ? product?.image
+                : `${
+                    import.meta.env.VITE_LOCAL_API_URL
+                  }/api/v1/images/uploads/${product?.image}`
+            }
+            alt={product?.name}
+            className="w-16 h-16 object-cover rounded-xl border border-gray-300"
+          />
+          <div>
+            <p>
+              <strong>Brand:</strong> {product.brand}
+            </p>
+            <p>
+              <strong>Model:</strong> {product.model}
+            </p>
+            <p>
+              <strong>SL:</strong> {product.product_id}
+            </p>
+          </div>
+        </div>
+      ),
       sortable: true,
-    },
-    {
-      title: 'Model',
-      dataKey: 'model',
-      row: (product) => <p>{product.model}</p>,
     },
     {
       title: 'Problem',
@@ -103,7 +118,12 @@ const ProductList = () => {
     {
       title: 'Customer Name',
       dataKey: 'customer_name',
-      row: (product) => <p>{product.customer_name}</p>,
+      row: (product) => (
+        <div>
+          <p>{product.customer_name}</p>
+          <p>{product.customer_number}</p>
+        </div>
+      ),
     },
     {
       title: 'Action',
@@ -128,7 +148,7 @@ const ProductList = () => {
   }
 
   if (error) {
-    return <div>Error: {error}</div>
+    return <div>{error}</div>
   }
 
   return (
