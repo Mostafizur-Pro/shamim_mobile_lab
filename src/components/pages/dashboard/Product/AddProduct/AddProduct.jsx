@@ -16,6 +16,7 @@ const AddProduct = () => {
     reset,
     setValue,
     getValues,
+    watch,
   } = useForm()
 
   const [image, setImage] = useState(null) // State to store image file
@@ -29,6 +30,14 @@ const AddProduct = () => {
     // Set default value for receive_date
     setValue('receive_date', today)
   }, [setValue, today])
+
+  useEffect(() => {
+    // Update due amount whenever bill or paid changes
+    const billAmount = parseFloat(bill) || 0
+    const paidAmount = parseFloat(paid) || 0
+    const dueAmount = billAmount - paidAmount
+    setValue('due', dueAmount > 0 ? dueAmount : 0)
+  }, [bill, paid, setValue])
 
   const handleImageChange = (event) => {
     const file = event.target.files[0]
