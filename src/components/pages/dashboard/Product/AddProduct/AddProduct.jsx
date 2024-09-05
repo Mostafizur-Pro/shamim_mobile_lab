@@ -47,6 +47,7 @@ const AddProduct = () => {
     const productData = {
       ...data,
       user_id: users?.id, // Ensure users and users.id exist
+      user_name: users?.name, // Ensure users and users.id exist
       due: dueAmount > 0 ? dueAmount : 0, // Set due amount or 0 if negative
     }
 
