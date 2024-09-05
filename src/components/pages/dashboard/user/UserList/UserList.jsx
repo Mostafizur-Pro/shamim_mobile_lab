@@ -92,7 +92,7 @@ const UserList = () => {
           throw new Error('Network response was not ok')
         }
         const data = await response.json()
-        console.log('data', data)
+        // console.log('data', data)
         setUserData(data.data)
       } catch (error) {
         setError(error.message)

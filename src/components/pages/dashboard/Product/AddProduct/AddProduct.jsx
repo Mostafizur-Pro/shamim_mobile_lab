@@ -4,34 +4,68 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/components/context/AuthContext'
+import { useState, useEffect } from 'react'
 
 const AddProduct = () => {
+  const today = new Date().toISOString().split('T')[0] // Get today's date in yyyy-mm-dd format
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
+    getValues,
   } = useForm()
+
+  const [image, setImage] = useState(null) // State to store image file
+  const [bill, setBill] = useState('') // State to track bill amount
+  const [paid, setPaid] = useState('') // State to track paid amount
 
   const { users } = useAuth()
   const navigate = useNavigate()
 
+  useEffect(() => {
+    // Set default value for receive_date
+    setValue('receive_date', today)
+  }, [setValue, today])
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0]
+    if (file) {
+      setImage(file)
+    }
+  }
+
   const handleFormSubmit = async (data) => {
     console.log('data', data)
+
+    const billAmount = parseFloat(data.bill) || 0
+    const paidAmount = parseFloat(data.paid) || 0
+    const dueAmount = billAmount - paidAmount
+
     const productData = {
       ...data,
       user_id: users?.id, // Ensure users and users.id exist
+      due: dueAmount > 0 ? dueAmount : 0, // Set due amount or 0 if negative
     }
+
+    const formData = new FormData()
+    Object.keys(productData).forEach((key) => {
+      formData.append(key, productData[key])
+    })
+
+    if (image) {
+      formData.append('image', image)
+    }
+
     try {
       // Post request to the API endpoint
       const response = await fetch(
         `${import.meta.env.VITE_LOCAL_API_URL}/api/v1/products`,
         {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(productData),
+          body: formData,
         }
       )
 
@@ -43,6 +77,10 @@ const AddProduct = () => {
       // console.log('Success:', result)
 
       reset() // Reset form fields after successful submission
+      setImage(null)
+      setBill('')
+      setPaid('')
+
       if (result) {
         navigate('/dashboard/product/product-list')
       }
@@ -52,7 +90,7 @@ const AddProduct = () => {
   }
 
   return (
-    <div className=" flex items-center justify-center bg-gray-100">
+    <div className="flex items-center justify-center bg-gray-100">
       <div className="w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg">
         <h5 className="text-2xl font-bold mb-4">Add Product Details</h5>
 
@@ -207,6 +245,8 @@ const AddProduct = () => {
                 id="bill"
                 type="number"
                 {...register('bill', { required: 'Bill Amount is required' })}
+                value={bill}
+                onChange={(e) => setBill(e.target.value)}
                 placeholder="Enter Bill Amount"
                 className="w-full p-2 border border-gray-300 rounded-md"
               />
@@ -219,7 +259,9 @@ const AddProduct = () => {
               <Input
                 id="paid"
                 type="number"
+                value={paid}
                 {...register('paid')}
+                onChange={(e) => setPaid(e.target.value)}
                 placeholder="Enter Paid Amount"
                 className="w-full p-2 border border-gray-300 rounded-md"
               />
@@ -229,9 +271,21 @@ const AddProduct = () => {
               <Input
                 id="due"
                 type="number"
-                {...register('due')}
-                placeholder="Enter Due Amount"
+                value={getValues('bill') - getValues('paid')}
+                readOnly
+                placeholder="Due Amount"
                 className="w-full p-2 border border-gray-300 rounded-md"
+              />
+            </div>
+            {/* Image Upload Section */}
+            <div>
+              <Label htmlFor="image">Product Image</Label>
+              <Input
+                id="image"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="w-full border border-gray-300 rounded-md"
               />
             </div>
           </div>

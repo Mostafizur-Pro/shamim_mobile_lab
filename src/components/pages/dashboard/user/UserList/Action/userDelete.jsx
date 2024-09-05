@@ -18,7 +18,7 @@ const UserDelete = ({ isOpen, onClose, user }) => {
     setIsDeleting(true)
     try {
       await axios.delete(
-        `${import.meta.env.VITE_LOCAL_API_URL}/api/v1/user/${user.id}`
+        `${import.meta.env.VITE_LOCAL_API_URL}/api/v1/users/${user.id}`
       )
 
       window.location.reload()
