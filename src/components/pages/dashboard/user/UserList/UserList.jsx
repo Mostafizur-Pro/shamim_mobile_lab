@@ -22,18 +22,39 @@ const UserList = () => {
     {
       title: 'Name',
       dataKey: 'name',
-      row: (user) => <p>{user?.name}</p>,
-    },
-    {
-      title: 'Number',
-      dataKey: 'number',
-      row: (user) => <p>{user?.number}</p>,
+      row: (user) => (
+        <div className="flex items-center gap-2 ">
+          <img
+            src={
+              user?.image ===
+              'https://www.vhv.rs/dpng/d/15-155087_dummy-image-of-user-hd-png-download.png'
+                ? user?.image
+                : `${
+                    import.meta.env.VITE_LOCAL_API_URL
+                  }/api/v1/images/uploads/${user?.image}`
+            }
+            alt={user?.name}
+            className="w-16 h-16 object-cover rounded-full border border-gray-300"
+          />
+          <div>
+            <p className="text-sm font-medium text-gray-900 capitalize">
+              {user?.name}
+            </p>
+            <p className="text-sm text-gray-500">{user?.role}</p>
+          </div>
+        </div>
+      ),
     },
 
     {
       title: 'Email',
       dataKey: 'email',
-      row: (user) => <p>{user?.email}</p>,
+      row: (user) => (
+        <div>
+          <p>{user?.email}</p>
+          <p className="text-sm text-gray-500">{user?.number}</p>
+        </div>
+      ),
     },
 
     {

@@ -54,7 +54,7 @@ const SignupPage = () => {
       }
 
       console.log('User created successfully')
-      navigate('/login')
+      navigate('/dashboard/user/user-list')
 
       // Optionally redirect or clear the form
     } catch (err) {
